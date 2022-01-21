@@ -1,0 +1,21 @@
+{
+  "name": "pg-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "wal2json",
+    "database.hostname": "postgresql",
+    "database.port": "5432",
+    "database.user": "root",
+    "database.password": "root",
+    "database.dbname" : "vehicledb",
+    "database.server.name": "pg-dev",
+    "table.include.list": "public.(.*)",
+    "heartbeat.interval.ms": "5000",
+    "slot.name": "vehicledb_debezium",
+    "publication.name": "vehicledb_publication",
+    "transforms": "AddPrefix",
+    "transforms.AddPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.AddPrefix.regex": "pg-dev.public.(.*)",
+    "transforms.AddPrefix.replacement": "data.cdc.vehicledb"
+  }
+}
